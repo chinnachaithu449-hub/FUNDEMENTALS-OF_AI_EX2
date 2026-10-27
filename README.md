@@ -1,8 +1,10 @@
 # FUNDEMENTALS-OF_AI_EX2
 # FUNDEMENTALS-OF_AI_EX2
 <h1>ExpNo 2 : Implement Depth First Search Traversal of a Graph</h1> 
-<h3>Name: </h3>
-<h3>Register Number:     </h3>
+<h3>Name: G chaithanya </h3>
+<h3>Register Number:212225230087</h3>
+<h3>Date: 15/10/2026</h3>
+
 <H3>Aim:</H3>
 <p> To Implement Depth First Search Traversal of a Graph using Python 3.</p>
 <h3>Theory:</h3>
@@ -59,56 +61,65 @@ Now, the Stack becomes empty, which means we have visited all the nodes, and our
 
 ## program:
 ~~~
-'''DEPTH FIRST SEARCH
-  - USES STACK AND RECURSION
-'''
 from collections import defaultdict
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def dfs(graph,start,visited,path):
-    path.append(start)
-    visited[start]=True
-    for neighbour in graph[start]:
-        if visited[neighbour]==False:
-            dfs(graph,neighbour,visited,path)
-    return path
+graph = defaultdict(list)
+G = nx.Graph()
 
-graph=defaultdict(list)
-G=nx.Graph()
+nodes, edges = map(int, input().split())
 
-nodes,edges=map(int,input().split())
-for _ in range(edges):
-    u,v=map(str,input().split())
+for i in range(edges):
+    u, v = input().split()
     graph[u].append(v)
     graph[v].append(u)
-    G.add_edge(u,v)
+    G.add_edge(u, v)
 
-start=input()
-visited=defaultdict(bool)
-path=[]
-traversedpath=dfs(graph,start,visited,path)
-print(traversedpath)
+print("Graph:", dict(graph))
 
-fig, ax = plt.subplots(figsize=(6,6))  
-
+# Draw the graph
 pos = nx.spring_layout(G)
+fig, ax = plt.subplots()
 
-nx.draw(
+nx.draw_networkx(
     G,
-    pos,
-    ax=ax,               
+    pos=pos,
+    ax=ax,
     with_labels=True,
     node_color="lightblue",
     edge_color="red",
-    node_size=2000,
-    font_weight="bold"
+    width=2,
+    node_size=2000
 )
 
 plt.show()
+
+# Depth First Search
+def dfs(graph, start, visited, path):
+    visited[start] = True
+    path.append(start)
+
+   for neighbour in graph[start]:
+        if not visited[neighbour]:
+            dfs(graph, neighbour, visited, path)
+
+   return path
+
+# Input starting node
+start = input("Enter start node: ")
+
+path = []
+visited = defaultdict(bool)
+
+if start in G:
+    dfs(graph, start, visited, path)
+    print("Depth First Search:")
+    print(path)
+else:
+    print("Starting node not found!")
 ~~~
-## output:
-![alt text](image.png)
+
 <hr>
 <h3>Sample Input</h3>
 <hr>
@@ -142,6 +153,13 @@ F H <BR>
 <h3>Sample Output</h3>
 <hr>
 ['0', '1', '2', '3', '4']
+
+
+##OUTPUT
+
+
+<img width="888" height="912" alt="Screenshot 2026-10-27 211527" src="https://github.com/user-attachments/assets/493be43c-8877-4e72-9f2d-1562ee045b1b" />
+
 
 <hr>
 <h3>Result:</h3>
